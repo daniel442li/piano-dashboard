@@ -62,6 +62,10 @@ input[type=search]{width:100%;padding-left:32px}
 .btn:hover{filter:brightness(1.08)}
 .btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line)}.btn.ghost:hover{border-color:var(--line2);filter:none}
 .btn .badge{background:var(--acc);color:#0b1020;border-radius:999px;font-size:11px;padding:0 6px;line-height:17px}
+.tog{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;user-select:none;transition:border-color .15s,background .15s}
+.tog:hover{border-color:var(--line2)}.tog input{accent-color:var(--ig);width:15px;height:15px;margin:0;cursor:pointer}
+.tog i{font-style:normal;font-weight:500;color:var(--mut);font-size:12px;font-variant-numeric:tabular-nums}
+.tog.on{border-color:var(--ig);background:#2a1424;color:#ffd0ea}
 .clear{background:none;border:0;color:var(--acc);cursor:pointer;font-size:12.5px;padding:4px}
 .count{color:var(--mut);font-size:12.5px;margin-left:auto;white-space:nowrap}
 #filtBtn{display:none}
@@ -194,6 +198,7 @@ footer{color:var(--dim);font-size:11.5px;text-align:center;padding:10px 24px 30p
   <select id="sort" aria-label="Sort">
    <option value="rank">Sort: fit rank</option><option value="median">Median views ↓</option><option value="followers">Followers ↓</option><option value="ratio">Views / follower ↓</option><option value="ppw">Posts / week ↓</option><option value="igf">IG followers ↓</option>
   </select>
+  <label class="tog" id="igOnlyTog" title="Show only Instagram reels in the cards, creator panel, watch queue and feed"><input type="checkbox" id="igOnly"> 📸 IG reels only <i id="igvN"></i></label>
   <button class="btn ghost" id="filtBtn" aria-expanded="false">Filters</button>
   <button class="btn" id="feedBtn">📱<span class="lg"> Feed mode</span></button>
   <button class="btn ghost" id="queueBtn">▶<span class="lg"> Watch queue</span></button>
@@ -237,7 +242,7 @@ function order(c){const vs=(c.videos||[]).slice();if(!vs.length)return vs;const 
 const BY={};
 D.forEach(c=>{c._pf=c.platform||c.primary_platform||'tiktok';c._tt=c.tt||'';c._app=appName(c);c._face=face(c);c._ratio=ratio(c);c._url=c.profile_url||('https://www.tiktok.com/@'+c.handle);
  c._hay=(c.handle+' '+c.content_style+' '+c.fit_note+' '+c.app_tie+' '+c.language+' '+(c.ig?c.ig.handle:'')).toLowerCase();
- c._vids=order(c);c._i=0;BY[c.handle]=c;});
+ c._all=order(c);c._vids=c._all;c._i=0;BY[c.handle]=c;});
 const linkify=s=>esc(s).replace(/(https?:\/\/[^\s|]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>').replace(/([\w.+-]+@[\w-]+\.[\w.]+)/g,m=>m.includes('href')?m:'<a href="mailto:'+m+'">'+m+'</a>');
 
 // ---- header
@@ -270,7 +275,7 @@ const isIG=id=>String(id).startsWith('ig:');
 const vsrc=v=>v.pf=='ig'||isIG(v.id)?'Instagram':'TikTok';
 const vurl=(c,v)=>vsrc(v)=='Instagram'?`https://www.instagram.com/reel/${v.id.slice(3)}/`:`https://www.tiktok.com/@${c._tt||c.handle}/video/${v.id}`;
 let SOUND=false;
-function mkFrame(id,ctx,o){const f=document.createElement('iframe');f.src=isIG(id)?`https://www.instagram.com/reel/${encodeURIComponent(String(id).slice(3))}/embed/`:PURL(id,o);f.dataset.tt=ctx;f.dataset.vid=id;f.dataset.play=o.auto?'1':'0';
+function mkFrame(id,ctx,o){const f=document.createElement('iframe');if(isIG(id))f.scrolling='no';f.src=isIG(id)?`https://www.instagram.com/reel/${encodeURIComponent(String(id).slice(3))}/embed/`:PURL(id,o);f.dataset.tt=ctx;f.dataset.vid=id;f.dataset.play=o.auto?'1':'0';
  f.allow='autoplay; encrypted-media; fullscreen; picture-in-picture';f.title=(isIG(id)?'Instagram Reel ':'TikTok ')+id;return f;}
 const send=(f,type,value)=>{try{if(f&&f.contentWindow)f.contentWindow.postMessage({'x-tiktok-player':true,type,value},'*')}catch(_){}};
 function playF(f){if(!f)return;f.dataset.play='1';if(f.dataset.ready){send(f,SOUND?'unMute':'mute');send(f,'play');}}
@@ -294,8 +299,14 @@ $('#foot').textContent=`Source: piano_promo_creators.csv + yt-dlp metadata. Vide
 const FILTERS=['#fTier','#fGroup','#fApp','#fFace','#fPf','#fIG'];
 const saved=store.get('pd-filters')||{};
 [...FILTERS,'#sort'].forEach(s=>{const el=$(s);if(saved[s]!=null&&[...el.options].some(o=>o.value==saved[s]))el.value=saved[s];});
+// "Instagram reels only": every player (cards, creator panel, queue, feed) uses only the IG reels, and creators without any are hidden
+const isIGv=v=>vsrc(v)=='Instagram';
+$('#igvN').textContent=D.reduce((a,c)=>a+c._all.filter(isIGv).length,0).toLocaleString();
+function setIGOnly(on){$('#igOnly').checked=on;$('#igOnlyTog').classList.toggle('on',on);
+ D.forEach(c=>{c._vids=on?c._all.filter(isIGv):c._all;c._i=0;});for(const k in EL)delete EL[k];}
+$('#igOnly').addEventListener('change',e=>{setIGOnly(e.target.checked);render();});
 function filtered(){const q=$('#q').value.trim().toLowerCase().replace(/^@/,''),t=$('#fTier').value,g=$('#fGroup').value,a=$('#fApp').value,f=$('#fFace').value,s=$('#sort').value,ig=$('#fIG').value,pf=$('#fPf').value;
- const r=D.filter(c=>(!t||c.fit==t)&&(!g||(g=='Tied'?tied(c):!tied(c)))&&(!a||c._app==a)&&(!f||c._face==f)&&(!pf||c._pf==pf)&&(!ig||(ig=='confirmed'?c.ig&&c.ig.conf=='confirmed':ig=='has'?!!c.ig:!c.ig))&&(!q||c._hay.includes(q)));
+ const r=D.filter(c=>(!t||c.fit==t)&&(!g||(g=='Tied'?tied(c):!tied(c)))&&(!a||c._app==a)&&(!f||c._face==f)&&(!pf||c._pf==pf)&&(!ig||(ig=='confirmed'?c.ig&&c.ig.conf=='confirmed':ig=='has'?!!c.ig:!c.ig))&&(!q||c._hay.includes(q))&&(!$('#igOnly').checked||c._vids.length));
  const key={rank:c=>-c.rank,median:c=>c.median_views_last20||0,followers:c=>c.followers||0,ratio:c=>c._ratio||0,ppw:c=>c.posts_per_week||0,igf:c=>(c.ig&&c.ig.followers)||c.ig_followers_num||0}[s];
  return r.sort((x,y)=>key(y)-key(x));}
 
@@ -341,7 +352,7 @@ function render(){LIST=filtered();
  document.querySelectorAll('#stats .stat[data-sel]').forEach(b=>b.classList.toggle('on',$('#'+b.dataset.sel).value==b.dataset.val));
  let nf=0;FILTERS.forEach(s=>{const on=!!$(s).value;$(s).classList.toggle('set',on);nf+=on;});
  $('#filtBtn').innerHTML=`Filters${nf?` <span class="badge">${nf}</span>`:''}`;$('#clearBtn').hidden=!nf&&!$('#q').value;
- const st={};[...FILTERS,'#sort'].forEach(s=>st[s]=$(s).value);store.set('pd-filters',st);
+ const st={igOnly:$('#igOnly').checked};[...FILTERS,'#sort'].forEach(s=>st[s]=$(s).value);store.set('pd-filters',st);
  $('#count').textContent=`${LIST.length} of ${D.length} creators`;$('#empty').hidden=LIST.length>0;
  unloadCard(ACTIVE);$('#grid').replaceChildren();SHOWN=0;more();}
 $('#grid').addEventListener('click',e=>{const el=e.target.closest('.card');if(!el)return;
@@ -397,7 +408,7 @@ function openCreator(h,start){const c=BY[h];if(!c)return;
 // watch queue: strong picks (respects current filters if they include strong creators)
 function openQueue(){let base=filtered().filter(c=>c.fit=='strong');if(!base.length)base=D.filter(c=>c.fit=='strong').sort((a,b)=>a.rank-b.rank);
  const L=[];base.forEach(c=>c._vids.forEach(v=>L.push({c,v})));
- openPlayer(`<h2>▶ Watch queue · strong picks</h2><span class="sub">${L.length} videos from ${base.length} creators · auto-advances</span>`,L,0,'');}
+ openPlayer(`<h2>▶ Watch queue · strong picks</h2><span class="sub">${L.length} videos from ${base.length} creators · ${$('#igOnly').checked?'press Next ▶ or → (Instagram reels can’t auto-advance)':'auto-advances'}</span>`,L,0,'');}
 $('#queueBtn').onclick=openQueue;
 
 // ---- feed mode: full-screen snap scroll. All slides are empty shells; only slides within NEAR of the
@@ -449,6 +460,7 @@ window.addEventListener('message',e=>{let host;try{host=new URL(e.origin).hostna
  else if(d.type=='onStateChange'){
     if(d.value===0){if(ctx=='modal'&&M.on&&M.auto&&f.closest('#mfr'))mGo(M.i+1);
    else if(ctx=='feed'&&F.on&&F.auto){const s=f.closest('.fs');if(s&&[...$('#fsc').children].indexOf(s)===F.i)fGo(F.i+1);}}}});
+if(saved.igOnly)setIGOnly(true);
 render();ioMore.observe($('#more'));
 if(location.hash=='#feed')openFeed();else if(location.hash.length>1)openCreator(decodeURIComponent(location.hash.slice(1)),0);
 window.DASH_VERSION='v6-fast-ui';
