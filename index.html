@@ -10,6 +10,7 @@
 <meta name="dash-ui" content="v6-fast-ui">
 <meta name="dash-yt" content="v7-youtube-top3">
 <meta name="dash-comp" content="v8-competitors">
+<meta name="dash-hearts" content="v9-hearts">
 <meta name="theme-color" content="#0b0d12">
 <title>Piano Promo Creators · Dashboard</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎹</text></svg>">
@@ -20,7 +21,7 @@
 :root{color-scheme:dark;
 --bg:#0b0d12;--surface:#12151c;--surface2:#181c26;--surface3:#1f2430;--line:#232836;--line2:#323a4e;
 --text:#e8ebf2;--mut:#8a92a6;--dim:#5f6779;--acc:#8ea2ff;--acc-bg:#1d2747;
---strong:#34d399;--medium:#fbbf24;--weak:#7c8496;--tied:#fb8a6a;--comp:#c084fc;--free:#4fd1e0;--ig:#f472b6;
+--strong:#34d399;--medium:#fbbf24;--weak:#7c8496;--tied:#fb8a6a;--comp:#c084fc;--free:#4fd1e0;--ig:#f472b6;--heart:#fb7185;
 --r:14px;--ease:cubic-bezier(.2,.7,.2,1)}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
@@ -51,7 +52,7 @@ h1 small{color:var(--mut);font-weight:500;font-size:13.5px;letter-spacing:0}
 
 /* toolbar */
 .bar{position:sticky;top:0;z-index:5;background:rgba(11,13,18,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line);margin-top:16px}
-.tb{display:flex;gap:8px;align-items:center;padding:10px 0}
+.tb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0}
 .fl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:0 0 10px}
 .fl[hidden]{display:none}
 .search{position:relative;flex:1 1 240px;min-width:160px}
@@ -69,6 +70,13 @@ input[type=search]{width:100%;padding-left:32px}
 .tog:hover{border-color:var(--line2)}.tog input{accent-color:var(--ig);width:15px;height:15px;margin:0;cursor:pointer}
 .tog i{font-style:normal;font-weight:500;color:var(--mut);font-size:12px;font-variant-numeric:tabular-nums}
 .tog.on{border-color:var(--ig);background:#2a1424;color:#ffd0ea}
+.tog.hearts input{accent-color:var(--heart)}.tog.hearts.on{border-color:var(--heart);background:#2c1418;color:#ffc9d0}
+.heart{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);color:var(--dim);display:grid;place-items:center;cursor:pointer;padding:0;transition:color .15s,border-color .15s,background .15s,transform .15s var(--ease)}
+.heart:hover{color:var(--heart);border-color:color-mix(in srgb,var(--heart) 45%,transparent)}
+.heart svg{fill:none;stroke:currentColor;stroke-width:2}
+.heart.on{color:var(--heart);border-color:color-mix(in srgb,var(--heart) 50%,transparent);background:color-mix(in srgb,var(--heart) 14%,transparent)}.heart.on svg{fill:currentColor}
+.heart:active{transform:scale(.88)}
+.card.hearted{border-color:color-mix(in srgb,var(--heart) 38%,var(--line))}
 .clear{background:none;border:0;color:var(--acc);cursor:pointer;font-size:12.5px;padding:4px}
 .count{color:var(--mut);font-size:12.5px;margin-left:auto;white-space:nowrap}
 #filtBtn{display:none}
@@ -209,6 +217,7 @@ footer{color:var(--dim);font-size:11.5px;text-align:center;padding:10px 24px 30p
    <option value="rank">Sort: fit rank</option><option value="median">Median views ↓</option><option value="followers">Followers ↓</option><option value="ratio">Views / follower ↓</option><option value="top3" title="Average views of the 3 best posts among the creator’s last 15 posts (TikTok videos or IG Reels, same platform as the median; pinned Reels older than the recent run are left out), computed Oct 22, 2026 from per-post views already scraped. Fewer than 15 posts known = average of the top 3 of those. YouTube: Average views of the 3 best videos among the last 15 posts (videos + Shorts), computed Oct 21–22, 2026 (members-only, live and unaired premiere posts left out).">Top-3 avg (last 15) ↓</option><option value="ppw">Posts / week ↓</option><option value="igf">IG followers ↓</option>
   </select>
   <label class="tog" id="igOnlyTog" title="Show only Instagram reels in the cards, creator panel, watch queue and feed. Creators with no IG reels on file (TikTok-only and YouTube channels) are hidden while this is on."><input type="checkbox" id="igOnly"> 📸 IG reels only <i id="igvN"></i></label>
+  <label class="tog hearts" id="heartOnlyTog" title="Show only the creators you've hearted (saved in this browser)"><input type="checkbox" id="heartOnly"> ♥ Hearted <i id="heartN">0</i></label>
   <button class="btn ghost" id="filtBtn" aria-expanded="false">Filters</button>
   <button class="btn" id="feedBtn">📱<span class="lg"> Feed mode</span></button>
   <button class="btn ghost" id="queueBtn">▶<span class="lg"> Watch queue</span></button>
@@ -222,6 +231,7 @@ footer{color:var(--dim);font-size:11.5px;text-align:center;padding:10px 24px 30p
   <select id="fPf" aria-label="Platform"><option value="">Platform: all</option><option value="tiktok">TikTok</option><option value="instagram">Instagram-first</option><option value="both">Both</option><option value="youtube">YouTube</option></select>
   <select id="fIG" aria-label="Instagram"><option value="">Instagram: any</option><option value="confirmed">IG confirmed</option><option value="has">Has IG (confirmed + likely)</option><option value="none">No IG found</option></select>
   <button class="clear" id="clearBtn" hidden>Clear filters</button>
+  <button class="clear" id="copyHearts" hidden title="Copy the hearted creators' handles and links">Copy hearted list</button>
   <span class="count" id="count"></span>
  </div>
 </div></div>
@@ -330,8 +340,23 @@ $('#igvN').textContent=D.reduce((a,c)=>a+c._all.filter(isIGv).length,0).toLocale
 function setIGOnly(on){$('#igOnly').checked=on;$('#igOnlyTog').classList.toggle('on',on);
  D.forEach(c=>{c._vids=on?c._all.filter(isIGv):c._all;c._i=0;});for(const k in EL)delete EL[k];}
 $('#igOnly').addEventListener('change',e=>{setIGOnly(e.target.checked);render();});
+// hearts: a per-browser shortlist, keyed by c._k; every heart button for a creator (card, creator panel) stays in sync
+const HEARTS=new Set((store.get('pd-hearts')||[]).filter(k=>BY[k]));
+const HEART_SVG='<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.4 7.9 3.6 4.5 7 4.5c2 0 3.6 1.1 5 3 1.4-1.9 3-3 5-3 3.4 0 5.6 3.4 4.3 6.8-1.8 4.6-9.3 9.2-9.3 9.2z" stroke-linejoin="round"/></svg>';
+const heartBtn=c=>{const on=HEARTS.has(c._k);return `<button class="heart${on?' on':''}" data-k="${esc(c._k)}" aria-pressed="${on}" aria-label="${on?'Unheart':'Heart'} @${esc(c.handle)}" title="${on?'Hearted · click to remove':'Heart this creator'}">${HEART_SVG}</button>`;};
+function heartCount(){$('#heartN').textContent=HEARTS.size;$('#copyHearts').hidden=!HEARTS.size;}
+function toggleHeart(k){const on=!HEARTS.has(k);on?HEARTS.add(k):HEARTS.delete(k);store.set('pd-hearts',[...HEARTS]);
+ document.querySelectorAll('.heart[data-k]').forEach(b=>{if(b.dataset.k!==k)return;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on);
+  b.setAttribute('aria-label',(on?'Unheart':'Heart')+' @'+BY[k].handle);b.title=on?'Hearted · click to remove':'Heart this creator';});
+ if(EL[k])EL[k].classList.toggle('hearted',on);heartCount();}
+document.addEventListener('click',e=>{const b=e.target.closest('.heart[data-k]');if(!b)return;e.stopPropagation();toggleHeart(b.dataset.k);},true);
+$('#heartOnly').addEventListener('change',e=>{$('#heartOnlyTog').classList.toggle('on',e.target.checked);render();});
+$('#copyHearts').onclick=async()=>{const txt=D.filter(c=>HEARTS.has(c._k)).sort((a,b)=>a.rank-b.rank).map(c=>`@${c.handle}\t${c._url}`).join('\n');
+ try{await navigator.clipboard.writeText(txt);$('#copyHearts').textContent=`Copied ${HEARTS.size} ✓`;}catch(_){prompt('Copy the hearted creators:',txt);}
+ setTimeout(()=>$('#copyHearts').textContent='Copy hearted list',1600);};
+heartCount();
 function filtered(){const q=$('#q').value.trim().toLowerCase().replace(/^@/,''),t=$('#fTier').value,g=$('#fGroup').value,a=$('#fApp').value,f=$('#fFace').value,s=$('#sort').value,ig=$('#fIG').value,pf=$('#fPf').value;
- const r=D.filter(c=>(!t||c.fit==t)&&(!g||(g=='Tied'?tied(c):g=='Comp'?comp(c):!tied(c)&&!comp(c)))&&(!a||c._app==a)&&(!f||c._face==f)&&(!pf||c._pf==pf)&&(!ig||(ig=='confirmed'?c.ig&&c.ig.conf=='confirmed':ig=='has'?!!c.ig:!c.ig))&&(!q||c._hay.includes(q))&&(!$('#igOnly').checked||c._vids.length));
+ const r=D.filter(c=>(!t||c.fit==t)&&(!g||(g=='Tied'?tied(c):g=='Comp'?comp(c):!tied(c)&&!comp(c)))&&(!a||c._app==a)&&(!f||c._face==f)&&(!pf||c._pf==pf)&&(!ig||(ig=='confirmed'?c.ig&&c.ig.conf=='confirmed':ig=='has'?!!c.ig:!c.ig))&&(!q||c._hay.includes(q))&&(!$('#igOnly').checked||c._vids.length)&&(!$('#heartOnly').checked||HEARTS.has(c._k)));
  const key={rank:c=>-c.rank,median:c=>c.median_views_last20||0,top3:c=>c.top3_avg_last15??-1,followers:c=>c.followers||0,ratio:c=>c._ratio||0,ppw:c=>c.posts_per_week||0,igf:c=>(c.ig&&c.ig.followers)||c.ig_followers_num||0}[s];
  return r.sort((x,y)=>key(y)-key(x));}
 
@@ -342,7 +367,7 @@ function cardHTML(c){const promos=c._vids.filter(v=>v.promo).length;
  const medLbl=c.median_views_last20==null&&c._pf=='instagram'?'IG views n/a':c._pf=='instagram'&&!c._tt&&c.ig_median_views!=null?'IG Reel median':c._pf=='youtube'?'YT median':'Median views';
  return `<div class="ch"><div class="av" aria-hidden="true">${esc(c.handle.replace(/[^a-z0-9]/gi,'').charAt(0)||'@')}</div>
   <div class="who"><a class="handle" href="${esc(c._url)}" target="_blank" rel="noopener">@${esc(c.handle)}</a><div class="sub">${pfShort(c)}${c.language?' · '+esc(c.language.split('(')[0].trim()):''}</div></div>
-  <div><span class="tier" data-t="${c.fit}">${c.fit}</span><div class="rk">#${c.rank}</div></div></div>
+  <div><span class="tier" data-t="${c.fit}">${c.fit}</span><div class="rk">#${c.rank}</div></div>${heartBtn(c)}</div>
  <div class="nums"><div class="n"><b>${fmt(c.followers)}</b><small>${c._pf=='instagram'?'IG followers':c._pf=='youtube'?'YT subs':'Followers'}</small></div><div class="n"><b>${fmt(c.median_views_last20)}</b><small>${medLbl}</small></div><div class="n"><b>${c._ratio==null?'—':c._ratio.toFixed(2)}</b><small>Views/foll.</small></div><div class="n" title="${esc(t3tip(c))}"><b>${fmt(c.top3_avg_last15)}</b><small>${t3n(c)==null||t3n(c)>=15?'Top-3 avg':`Top-3 · ${t3n(c)} posts`}</small></div></div>
  <div class="badges">${comp(c)?tieB(c):tied(c)?`<span class="b tied">Tied · ${esc(c._app)}</span>`:`<span class="b free">Not tied</span>`}${c.partnership_type&&c.partnership_type!='none'?`<span class="b" title="${esc(c.partnership_type)}">${esc(c.partnership_type)}</span>`:''}<span class="b">Face: ${esc(c.face_on_camera.split('(')[0].trim())}</span>${igHTML(c)}</div>
  ${c._vids.length?`<div class="pl">${phHTML(c._vids[c._i])}</div><div class="pnav">${navHTML(c)}</div>`:(c.ig||c._pf=='instagram'?igCTA(c):`<div class="pl none">No video data · <a href="${esc(c._url)}" target="_blank" rel="noopener">open profile</a></div>`)}
@@ -351,7 +376,7 @@ function cardHTML(c){const promos=c._vids.filter(v=>v.promo).length;
  ${c.contact?`<div class="meta">✉ ${linkify(c.contact)}</div>`:''}
  <div class="cf"><span class="sub">${c._vids.length} video${c._vids.length==1?'':'s'}${promos?` · <span style="color:var(--tied)">${promos} app mention${promos>1?'s':''}</span>`:''}</span><button class="vc">Details →</button></div>`;}
 const EL={};
-function cardEl(c){let el=EL[c._k];if(el)return el;el=document.createElement('div');el.className='card';el.dataset.tier=c.fit;el.dataset.h=c._k;el.tabIndex=0;el.innerHTML=cardHTML(c);return EL[c._k]=el;}
+function cardEl(c){let el=EL[c._k];if(el)return el;el=document.createElement('div');el.className='card'+(HEARTS.has(c._k)?' hearted':'');el.dataset.tier=c.fit;el.dataset.h=c._k;el.tabIndex=0;el.innerHTML=cardHTML(c);return EL[c._k]=el;}
 let ACTIVE=null;
 const cardF=card=>card&&card.querySelector('.pl iframe,.pl .ytl');
 function playCard(card){const c=BY[card.dataset.h],pl=card.querySelector('.pl');if(!c||!c._vids.length||!pl||pl.classList.contains('none'))return;
@@ -377,7 +402,7 @@ function render(){LIST=filtered();
  document.querySelectorAll('#stats .stat[data-sel]').forEach(b=>b.classList.toggle('on',$('#'+b.dataset.sel).value==b.dataset.val));
  let nf=0;FILTERS.forEach(s=>{const on=!!$(s).value;$(s).classList.toggle('set',on);nf+=on;});
  $('#filtBtn').innerHTML=`Filters${nf?` <span class="badge">${nf}</span>`:''}`;$('#clearBtn').hidden=!nf&&!$('#q').value;
- const st={igOnly:$('#igOnly').checked};[...FILTERS,'#sort'].forEach(s=>st[s]=$(s).value);store.set('pd-filters',st);
+ const st={igOnly:$('#igOnly').checked,heartOnly:$('#heartOnly').checked};[...FILTERS,'#sort'].forEach(s=>st[s]=$(s).value);store.set('pd-filters',st);
  $('#count').textContent=`${LIST.length} of ${D.length} creators`;$('#empty').hidden=LIST.length>0;
  $('#empty').textContent='No creators match these filters.'+($('#igOnly').checked?($('#fPf').value=='youtube'?' YouTube channels have no Instagram reels on file — turn off “IG reels only” to see them.':' “IG reels only” is on — it hides creators without Instagram reels.'):'');
  unloadCard(ACTIVE);$('#grid').replaceChildren();SHOWN=0;more();}
@@ -422,7 +447,7 @@ function mGo(i){if(!M.list.length)return;M.i=(i+M.list.length)%M.list.length;con
  if(mCur)mCur.classList.remove('cur');mCur=$('#ml').querySelector(`.qi[data-i="${M.i}"]`);if(mCur){mCur.classList.add('cur');mCur.scrollIntoView({block:'nearest'});}armTimer();}
 function openCreator(h,start){const c=BY[h];if(!c)return;
  const kv=(k,v)=>`<div class="kv"><small>${k}</small>${v}</div>`;
- openPlayer(`<span class="tier" data-t="${c.fit}">${c.fit}</span><h2><a href="${esc(c._url)}" target="_blank" rel="noopener">@${esc(c.handle)}</a></h2><span class="sub">#${c.rank} · ${fmt(c.followers)} followers · ${fmt(c.median_views_last20)} median · <span title="${esc(t3tip(c))}">${fmt(c.top3_avg_last15)} ${t3lbl(c)}</span> · ${comp(c)?'Competitor':tied(c)?'Tied · '+esc(c._app):'Not tied'}</span>${PFB(c)}${comp(c)?tieB(c):''}${igHTML(c)}`,
+ openPlayer(`${heartBtn(c)}<span class="tier" data-t="${c.fit}">${c.fit}</span><h2><a href="${esc(c._url)}" target="_blank" rel="noopener">@${esc(c.handle)}</a></h2><span class="sub">#${c.rank} · ${fmt(c.followers)} followers · ${fmt(c.median_views_last20)} median · <span title="${esc(t3tip(c))}">${fmt(c.top3_avg_last15)} ${t3lbl(c)}</span> · ${comp(c)?'Competitor':tied(c)?'Tied · '+esc(c._app):'Not tied'}</span>${PFB(c)}${comp(c)?tieB(c):''}${igHTML(c)}`,
   c._vids.map(v=>({c,v})),start||0,
   `<div class="mb"><div class="info">
   ${kv('Fit note',esc(c.fit_note))}${kv('App tie',esc(c.app_tie))}${kv('Partnership',esc(c.partnership_type))}${kv('Evidence',esc(c.app_evidence))}
@@ -487,8 +512,9 @@ window.addEventListener('message',e=>{let host;try{host=new URL(e.origin).hostna
     if(d.value===0){if(ctx=='modal'&&M.on&&M.auto&&f.closest('#mfr'))mGo(M.i+1);
    else if(ctx=='feed'&&F.on&&F.auto){const s=f.closest('.fs');if(s&&[...$('#fsc').children].indexOf(s)===F.i)fGo(F.i+1);}}}});
 if(saved.igOnly)setIGOnly(true);
+if(saved.heartOnly&&HEARTS.size){$('#heartOnly').checked=true;$('#heartOnlyTog').classList.add('on');}
 render();ioMore.observe($('#more'));
 if(location.hash=='#feed')openFeed();else if(location.hash.length>1)openCreator(decodeURIComponent(location.hash.slice(1)),0);
-window.DASH_VERSION='v6-fast-ui';
+window.DASH_VERSION='v9-hearts';
 </script>
 </body></html>
