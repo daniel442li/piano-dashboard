@@ -15,20 +15,22 @@
 <meta name="dash-course" content="v11-sells-course">
 <meta name="dash-contacts" content="v12-contacts">
 <meta name="dash-hearts" content="v9-hearts">
-<meta name="theme-color" content="#0b0d12">
+<meta name="theme-color" content="#fdfcfa">
+<meta name="dash-deals" content="v13-negotiations-gleam">
 <title>Piano Promo Creators · Dashboard</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎹</text></svg>">
 <link rel="preconnect" href="https://www.tiktok.com">
 <link rel="preconnect" href="https://www.instagram.com">
 <link rel="preconnect" href="https://www.youtube.com">
 <style>
-:root{color-scheme:dark;
---bg:#0b0d12;--surface:#12151c;--surface2:#181c26;--surface3:#1f2430;--line:#232836;--line2:#323a4e;
---text:#e8ebf2;--mut:#8a92a6;--dim:#5f6779;--acc:#8ea2ff;--acc-bg:#1d2747;
---strong:#34d399;--medium:#fbbf24;--weak:#7c8496;--tied:#fb8a6a;--comp:#c084fc;--free:#4fd1e0;--ig:#f472b6;--heart:#fb7185;
---r:14px;--ease:cubic-bezier(.2,.7,.2,1)}
+:root{color-scheme:light;
+--bg:#fdfcfa;--surface:#ffffff;--surface2:#f7f2f2;--surface3:#efe9e7;--line:#ede8e6;--line2:#ddd9d8;
+--text:#353334;--mut:#5c5859;--dim:#8a8586;--acc:#a8430f;--acc-bg:#f7eee5;
+--strong:#2e9e5b;--medium:#d98a1c;--weak:#8a8586;--tied:#d9442b;--comp:#7c4dd6;--free:#1f8fa3;--ig:#c1357a;--heart:#e5483a;
+--primary-border:#ee8a44;--primary-shade:#6d2b09;--hand-r:#ef8038;--hand-l:#3d8fd1;
+--r:12px;--ease:cubic-bezier(.2,.7,.2,1)}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+html,body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 -apple-system,"SF Pro Text",ui-sans-serif,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:var(--acc);text-decoration:none}a:hover{text-decoration:underline}
 button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
@@ -55,7 +57,7 @@ h1 small{color:var(--mut);font-weight:500;font-size:13.5px;letter-spacing:0}
 .apps .hidden-app{display:none}.apps.all .hidden-app{display:inline-flex}
 
 /* toolbar */
-.bar{position:sticky;top:0;z-index:5;background:rgba(11,13,18,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line);margin-top:16px}
+.bar{position:sticky;top:0;z-index:5;background:rgba(253,252,250,.88);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid var(--line);margin-top:16px}
 .tb{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0}
 .fl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:0 0 10px}
 .fl[hidden]{display:none}
@@ -66,15 +68,15 @@ select:hover,input[type=search]:hover{border-color:var(--line2)}
 select{padding-right:26px;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%238a92a6' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
 select.set{border-color:var(--acc);background-color:var(--acc-bg)}
 input[type=search]{width:100%;padding-left:32px}
-.btn{display:inline-flex;align-items:center;gap:6px;height:36px;background:var(--acc);color:#0b1020;border:0;border-radius:10px;padding:0 14px;font-weight:650;cursor:pointer;font-size:13px;white-space:nowrap;transition:filter .15s,background .15s}
+.btn{display:inline-flex;align-items:center;gap:6px;height:36px;background:var(--acc);color:#ffffff;border:0;border-radius:10px;padding:0 14px;font-weight:650;cursor:pointer;font-size:13px;white-space:nowrap;transition:filter .15s,background .15s}
 .btn:hover{filter:brightness(1.08)}
 .btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--line)}.btn.ghost:hover{border-color:var(--line2);filter:none}
-.btn .badge{background:var(--acc);color:#0b1020;border-radius:999px;font-size:11px;padding:0 6px;line-height:17px}
+.btn .badge{background:var(--acc);color:#ffffff;border-radius:999px;font-size:11px;padding:0 6px;line-height:17px}
 .tog{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;user-select:none;transition:border-color .15s,background .15s}
 .tog:hover{border-color:var(--line2)}.tog input{accent-color:var(--ig);width:15px;height:15px;margin:0;cursor:pointer}
 .tog i{font-style:normal;font-weight:500;color:var(--mut);font-size:12px;font-variant-numeric:tabular-nums}
-.tog.on{border-color:var(--ig);background:#2a1424;color:#ffd0ea}
-.tog.hearts input{accent-color:var(--heart)}.tog.hearts.on{border-color:var(--heart);background:#2c1418;color:#ffc9d0}
+.tog.on{border-color:var(--ig);background:#fbeaf3;color:#9c2763}
+.tog.hearts input{accent-color:var(--heart)}.tog.hearts.on{border-color:var(--heart);background:#fdecea;color:#b3311d}
 .heart{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface2);color:var(--dim);display:grid;place-items:center;cursor:pointer;padding:0;transition:color .15s,border-color .15s,background .15s,transform .15s var(--ease)}
 .heart:hover{color:var(--heart);border-color:color-mix(in srgb,var(--heart) 45%,transparent)}
 .heart svg{fill:none;stroke:currentColor;stroke-width:2}
@@ -91,7 +93,7 @@ main{padding-top:18px;padding-bottom:60px}
 .grid>.card{min-width:0}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;cursor:pointer;position:relative;display:flex;flex-direction:column;gap:10px;
  content-visibility:auto;contain-intrinsic-size:auto 470px;transition:border-color .15s,box-shadow .15s}
-.card:hover{border-color:var(--line2);box-shadow:0 6px 24px -12px #000}
+.card:hover{border-color:var(--line2);box-shadow:0 6px 24px -14px rgba(53,51,52,.35)}
 .card[data-tier=strong]{--t:var(--strong)}.card[data-tier=medium]{--t:var(--medium)}.card[data-tier=weak]{--t:var(--weak)}
 .card.playing{border-color:var(--acc);content-visibility:visible}
 .ch{display:flex;gap:10px;align-items:center}
@@ -107,17 +109,17 @@ main{padding-top:18px;padding-bottom:60px}
 .n{padding:7px 8px;min-width:0;border-right:1px solid var(--line)}.n:last-child{border-right:0}
 .n b{display:block;font-size:15.5px;font-weight:650}.n small{color:var(--mut);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
 .badges{display:flex;flex-wrap:wrap;gap:5px}
-.b{font-size:11.5px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface2);color:#c9cedb;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
-.b.tied{border-color:#5c3326;background:#24160f;color:#ffb39f}.b.free{border-color:#1d4d55;background:#0f2125;color:#8ee8f4}
-.b.ig{border-color:#5c2a50;background:#21111c;color:#f9a8d4}.b.ig:hover{text-decoration:none;border-color:var(--ig)}
+.b{font-size:11.5px;padding:2px 8px;border-radius:6px;border:1px solid var(--line);background:var(--surface2);color:#5c5859;white-space:nowrap;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.b.tied{border-color:#f2cdbf;background:#fbefe8;color:#a8430f}.b.free{border-color:#bfe3e8;background:#eaf6f8;color:#16707f}
+.b.ig{border-color:#f1c6dd;background:#fbeaf3;color:#9c2763}.b.ig:hover{text-decoration:none;border-color:var(--ig)}
 .b.ig .ok{color:var(--ig);margin-left:2px}.b.ig.likely{border-style:dashed;opacity:.8}
-.b.pf-youtube{border-color:#5c2626;background:#241010;color:#ffb3b3}
+.b.pf-youtube{border-color:#f2c4bc;background:#fdeeeb;color:#b3311d}
 .b.ytf{display:inline-flex;align-items:center;gap:5px}
-.lkc{text-decoration:none;cursor:pointer}.lkc.pf-youtube{border-color:#5c2626;background:#241010;color:#ffb3b3}.lkc.pf-tiktok{border-color:#21485c;background:#0f1d24;color:#a5e4ff}.lkc.pf-instagram{border-color:#5c2648;background:#24101c;color:#ffb3df}.lkc.likely{border-style:dashed}.lkc:hover{filter:brightness(1.25)}
-.b.lkt{border-style:dashed}.pfi{letter-spacing:1px}.tog.link input{accent-color:#a5e4ff}.tog.link.on{border-color:#4b8fb0;background:#0f1d24;color:#cdeeff}.lkrow{margin:2px 0}
-.em a{color:#ffd59a}.em .mg{color:#c9b8ff}.cxd summary{cursor:pointer;color:var(--mut,#9aa)}.cxd summary::marker{color:#777}.cxl{margin:3px 0 0;padding:0;list-style:none}.cxl li{margin:2px 0}.cxl a{color:#cfe3ff}.b.mail{border-color:#6b5a2f;background:#261f11;color:#ffd59a}.tog.mail input{accent-color:#ffd59a}.tog.mail.on{border-color:#a8873f;background:#261f11;color:#ffe9c4}
-.b.crs{border-color:#2f6b3a;background:#11261a;color:#9df0b0;font-weight:650}.crsv a{color:#9df0b0}.tog.course input{accent-color:#7ee2a0}.tog.course.on{border-color:#3f9a5a;background:#11261a;color:#c9f7d6}
-.b.comp{border-color:#4c2d6b;background:#1c1229;color:#e2c6ff;font-weight:650}
+.lkc{text-decoration:none;cursor:pointer}.lkc.pf-youtube{border-color:#f2c4bc;background:#fdeeeb;color:#b3311d}.lkc.pf-tiktok{border-color:#bfdbe8;background:#eaf4f9;color:#1f6f99}.lkc.pf-instagram{border-color:#f1c6dd;background:#fbeaf3;color:#9c2763}.lkc.likely{border-style:dashed}.lkc:hover{filter:brightness(1.25)}
+.b.lkt{border-style:dashed}.pfi{letter-spacing:1px}.tog.link input{accent-color:#1f6f99}.tog.link.on{border-color:#3d8fd1;background:#eaf4f9;color:#1f6f99}.lkrow{margin:2px 0}
+.em a{color:#8a5a00}.em .mg{color:#6a45c2}.cxd summary{cursor:pointer;color:var(--mut,#9aa)}.cxd summary::marker{color:#777}.cxl{margin:3px 0 0;padding:0;list-style:none}.cxl li{margin:2px 0}.cxl a{color:#cfe3ff}.b.mail{border-color:#f0d9a8;background:#fdf6e7;color:#8a5a00}.tog.mail input{accent-color:#8a5a00}.tog.mail.on{border-color:#f2be3a;background:#fdf6e7;color:#8a5a00}
+.b.crs{border-color:#bfe3cc;background:#ecf7f0;color:#1f7a45;font-weight:650}.crsv a{color:#1f7a45}.tog.course input{accent-color:#7ee2a0}.tog.course.on{border-color:#2e9e5b;background:#ecf7f0;color:#1f7a45}
+.b.comp{border-color:#d9c9f2;background:#f3edfc;color:#5a3aa8;font-weight:650}
 .note{color:#c3c8d4;font-size:12.8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0}
 .meta{color:var(--mut);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .meta a{color:var(--mut);text-decoration:underline;text-decoration-color:var(--line2)}
@@ -159,7 +161,7 @@ main{padding-top:18px;padding-bottom:60px}
 .ov{position:fixed;inset:0;background:rgba(3,4,8,.72);backdrop-filter:blur(3px);z-index:20;display:none;align-items:stretch;justify-content:center}
 .ov.show{display:flex;animation:fade .15s}
 @keyframes fade{from{opacity:0}}
-.modal{background:var(--bg);border:1px solid var(--line);width:min(1250px,100%);margin:3vh 12px;border-radius:18px;overflow:auto;position:relative;box-shadow:0 30px 80px -20px #000}
+.modal{background:var(--bg);border:1px solid var(--line);width:min(1250px,100%);margin:3vh 12px;border-radius:18px;overflow:auto;position:relative;box-shadow:0 30px 80px -24px rgba(53,51,52,.45)}
 .mh{position:sticky;top:0;background:rgba(18,21,28,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:14px 18px;display:flex;gap:12px;align-items:center;z-index:2;flex-wrap:wrap}
 .mh h2{margin:0;font-size:18px}.mh h2 a{color:var(--text)}
 .x{margin-left:auto;background:var(--surface);border:1px solid var(--line);color:var(--text);border-radius:10px;width:36px;height:36px;font-size:16px;cursor:pointer}
@@ -210,6 +212,36 @@ footer{color:var(--dim);font-size:11.5px;text-align:center;padding:10px 24px 30p
  .q{grid-template-columns:minmax(0,1fr);padding:12px}.modal{margin:0;border-radius:0}.ql{max-height:none}.grid{grid-template-columns:minmax(0,1fr)}.q .fr{max-height:70vh}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* Gleam extras */
+.btn{color:#fff}.btn.ghost{color:var(--text)}
+.stat.on b,.stat.on small{color:var(--primary-shade)}
+h1{color:var(--text)}
+.views{display:flex;gap:4px;margin:14px 0 0;background:var(--surface2);border:1px solid var(--line);border-radius:999px;padding:4px;width:max-content;max-width:100%}
+.views button{appearance:none;border:0;background:none;padding:7px 16px;border-radius:999px;font-weight:600;cursor:pointer;color:var(--mut)}
+.views button.on{background:var(--surface);color:var(--acc);box-shadow:0 1px 3px rgba(53,51,52,.15)}
+body.deals>:not(header):not(#deals):not(script):not(style){display:none!important}
+body.deals #stats,body.deals #apps{display:none}
+#deals{display:none}body.deals #deals{display:block}
+#deals h2{font-size:17px;margin:28px 0 4px;letter-spacing:-.01em}#deals .cap{color:var(--mut);font-size:12.5px;margin:0 0 10px}
+.fun{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:18px 0 6px}
+.fs1{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden}
+.fs1 b{font-size:24px;display:block;font-variant-numeric:tabular-nums}.fs1 small{color:var(--mut);font-size:12px}
+.fs1 i{position:absolute;left:0;bottom:0;height:4px;background:var(--acc);border-radius:0 4px 4px 0}
+.fs1 em{font-style:normal;color:var(--dim);font-size:11px;display:block;margin-top:2px}
+.dctl{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.dctl select{height:34px;border:1px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--text);padding:0 10px}
+.tw{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.dt{border-collapse:collapse;width:100%;font-size:13px}
+.dt th{text-align:left;font-weight:600;color:var(--mut);font-size:12px;background:var(--surface2);padding:9px 12px;white-space:nowrap;cursor:pointer;user-select:none}
+.dt td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+.dt tr:hover td{background:#fdfaf7}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap;background:var(--surface2);color:var(--mut)}
+.pill.ok{background:#ecf7f0;color:#1f7a45}.pill.warn{background:#fdf6e7;color:#8a5a00}.pill.bad{background:#fdeeeb;color:#b3311d}.pill.acc{background:var(--acc-bg);color:var(--acc)}
+.t1{background:#ecf7f0;color:#1f7a45}.t2{background:#eaf4f9;color:#1f6f99}.t3{background:#fdf6e7;color:#8a5a00}
+.note{background:var(--acc-bg);border:1px solid #f1d9c4;border-radius:12px;padding:10px 14px;font-size:12.5px;color:var(--primary-shade);margin:10px 0}
+@media (max-width:820px){.fun{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:480px){.fun{grid-template-columns:repeat(2,1fr)}.dt{font-size:12px}}
 </style>
 </head>
 <body>
@@ -218,7 +250,23 @@ footer{color:var(--dim);font-size:11.5px;text-align:center;padding:10px 24px 30p
   <div class="sub" id="sub"></div>
   <div class="stats" id="stats"></div>
   <div class="apps" id="apps"></div>
+  <nav class="views" role="tablist"><button class="on" data-v="creators">🎹 Creators</button><button data-v="deals">🤝 Negotiations</button></nav>
 </header>
+<section id="deals" class="wrap" aria-label="Negotiations">
+<div class="fun" id="fun"></div>
+<div class="note">Public view: emails, phone numbers, offer amounts, message contents and internal next steps are left out. Data as of <span id="dAsof"></span>, from the Negotiator.</div>
+<h2>Offers</h2><p class="cap">Every paid-promo offer, drafted or sent. Click a column to sort; creator names open their dashboard card when they're on it.</p>
+<div class="dctl"><select id="dSt"><option value="pending">Pending (sent + drafts)</option><option value="sent">Sent</option><option value="draft">Drafts</option><option value="closed">Accepted / declined</option><option value="">All</option></select>
+<select id="dTier"><option value="">All tiers</option><option value="1">Tier 1</option><option value="2">Tier 2</option><option value="3">Tier 3</option><option value="0">Unrated</option></select>
+<select id="dCh"><option value="">All channels</option><option>IG</option><option>Email</option></select></div>
+<div class="tw"><table class="dt" id="tOff"></table></div>
+<h2>Demographics received</h2><p class="cap">As creators reported from their insights. Tier is by audience geography: 1 = mostly US/CA/UK/AU/NZ/IE or W/N Europe, 2 = mixed or S/E Europe, Turkey, LatAm, Middle East, E Asia, 3 = mostly India, S/SE/Central Asia, Africa.</p>
+<div class="dctl"><select id="dTier2"><option value="">All tiers</option><option value="1">Tier 1</option><option value="2">Tier 2</option><option value="3">Tier 3</option><option value="0">Unrated</option></select></div>
+<div class="tw"><table class="dt" id="tDemo"></table></div>
+<h2>Asked for demographics, no reply</h2><div class="tw"><table class="dt" id="tAw"></table></div>
+<h2>Replied, demographics ask not sent yet</h2><div class="tw"><table class="dt" id="tRp"></table></div>
+<div style="height:40px"></div></section>
+
 <div class="bar"><div class="wrap">
  <div class="tb">
   <label class="search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -579,5 +627,38 @@ if(saved.heartOnly&&HEARTS.size){$('#heartOnly').checked=true;$('#heartOnlyTog')
 render();ioMore.observe($('#more'));
 if(location.hash=='#feed')openFeed();else if(location.hash.length>1)openCreator(decodeURIComponent(location.hash.slice(1)),0);
 window.DASH_VERSION='v9-hearts';
+</script>
+<script id="deals-data" type="application/json">{"asof": "Nov 3, 2026, 10:11 AM PT", "tiers": {"Maftuna": [3, "Uzbekistan 63.9%, Central Asia"], "Giovanni Saraceno": [2, "Mixed: Iran, Brazil, US, Mexico, India"], "Kipuka": [2, "Mixed: US 12.7%, UK 3.6% with Indonesia, India, Brazil"], "Santiago": [2, "Latin America led (Mexico 19.7%), US 15.4%"], "Gürkan": [2, "Turkey 68.3%"], "Dimitris Nikolopoulos": [1, "Germany, US, Netherlands, France lead (no %)"], "RIAN POV": [3, "India 22% top, Brazil 17%, US about 5%"], "Minushi": [0, "Not transcribed"], "Zedoist": [1, "US, UK, Canada 44.2% of top five"], "Musician Manan": [3, "India 71.5%"], "Mustafa": [2, "Türkiye 43.1%, Middle East"], "Anjan Bhattacharjee": [3, "India 91.9%"]}, "offers": [{"n": "Maftuna", "h": "pianomom.life", "ch": "IG", "terms": "old", "st": "replied", "txt": "Sent, asked for contract", "date": "2026-10-27", "views": 1000000, "tier": 3}, {"n": "Kipuka", "h": "pianobykipuka", "ch": "Email", "terms": "old", "st": "replied", "txt": "Sent, open; our reply pending", "date": "2026-10-29", "views": 1000000, "tier": 2}, {"n": "Gürkan", "h": "gnpiano", "ch": "IG", "terms": "old", "st": "replied", "txt": "Sent, asked for sample", "date": "2026-10-29", "views": 900000, "tier": 2}, {"n": "Santiago", "h": "veinti.28", "ch": "IG", "terms": "old", "st": "sent", "txt": "Sent, attachment unopened", "date": "2026-10-29", "views": 600000, "tier": 2}, {"n": "Giovanni Saraceno", "h": "gianpiano_", "ch": "Email", "terms": "old", "st": "sent", "txt": "Sent, no reply", "date": "2026-10-29", "views": 1000000, "tier": 2}, {"n": "Minushi", "h": "minushi_g", "ch": "IG", "terms": "new", "st": "draft", "txt": "Draft, not sent", "date": "", "views": 750000, "tier": 0}, {"n": "RIAN POV", "h": "itsrianpov", "ch": "Email", "terms": "old", "st": "draft", "txt": "Draft, not sent", "date": "", "views": 1000000, "tier": 3}, {"n": "Zedoist", "h": "zedoist", "ch": "Email", "terms": "new", "st": "draft", "txt": "Draft, not sent", "date": "", "views": 600000, "tier": 1}, {"n": "Musician Manan", "h": "mrmananprajapati", "ch": "Email", "terms": "new", "st": "draft", "txt": "Draft, not sent", "date": "", "views": 600000, "tier": 3}, {"n": "Mustafa", "h": "ivory.feels_", "ch": "IG", "terms": "new", "st": "draft", "txt": "Draft, not sent", "date": "", "views": 500000, "tier": 2}, {"n": "Anjan Bhattacharjee", "h": "anjanmusiclab", "ch": "Email", "terms": "new", "st": "draft", "txt": "Draft, not sent", "date": "", "views": 1000000, "tier": 3}, {"n": "Dimitris Nikolopoulos", "h": "dimitris.nikolopoulos.piano", "ch": "IG", "terms": "old", "st": "accepted", "txt": "Accepted Nov 1; contract drafted", "date": "2026-10-29", "views": 600000, "tier": 1}, {"n": "David Dang", "h": "_symphonique_", "ch": "IG", "terms": "contract", "st": "accepted", "txt": "Accepted; contract signed Oct 28", "date": "2026-10-26", "views": 1000000, "tier": 0}, {"n": "Dasha", "h": "dashashpringer", "ch": "IG", "terms": "old", "st": "declined", "txt": "Declined (wants fixed fee)", "date": "2026-10-26", "views": 750000, "tier": 0}], "demo": [{"n": "Maftuna", "h": "pianomom.life", "src": "IG", "geo": "Uzbekistan 63.9%, Russia 7.5%, then Kyrgyzstan, Kazakhstan, Turkey", "age": "unknown", "gender": "unknown", "tier": 3, "basis": "Uzbekistan 63.9%, Central Asia"}, {"n": "Giovanni Saraceno", "h": "gianpiano_", "src": "IG", "geo": "Iran 8.9%, Brazil 6.9%, US 6.9%, Mexico 5.4%, India 4.6%", "age": "13–17 12.9%, 18–24 45.1%, 25–34 31.7%, 35–44 5.8%", "gender": "Men 55.9%, women 44.1%", "tier": 2, "basis": "Mixed: Iran, Brazil, US, Mexico, India"}, {"n": "Kipuka", "h": "pianobykipuka", "src": "IG", "geo": "US 12.7%, Indonesia 8.8%, India 8.2%, Brazil 5.8%, UK 3.6%", "age": "unknown", "gender": "unknown", "tier": 2, "basis": "Mixed: US 12.7%, UK 3.6% with Indonesia, India, Brazil"}, {"n": "Santiago", "h": "veinti.28", "src": "IG", "geo": "Mexico 19.7%, US 15.4%, Argentina 6.7%, Chile 4.7%, Brazil 4.5%", "age": "13–17 16.6%, 18–24 41.9%, 25–34 32.7%, 35–44 5.4%", "gender": "Men 88.8%, women 11.2%", "tier": 2, "basis": "Latin America led (Mexico 19.7%), US 15.4%"}, {"n": "Gürkan", "h": "gnpiano", "src": "IG", "geo": "Turkey 68.3%, Germany 5.0%, Azerbaijan 4.2%, Iran 2.7%, Iraq 1.5%", "age": "25–34 35%, 35–44 27%", "gender": "Men 65.2%", "tier": 2, "basis": "Turkey 68.3%"}, {"n": "Dimitris Nikolopoulos", "h": "dimitris.nikolopoulos.piano", "src": "IG", "geo": "Germany, US, Netherlands, France, Greece (ranked)", "age": "25–34 40.1%", "gender": "Men 56.5%, women 43.5%", "tier": 1, "basis": "Germany, US, Netherlands, France lead (no %)"}, {"n": "RIAN POV", "h": "itsrianpov", "src": "IG + YouTube", "geo": "India 22%, Brazil 17%, US about 5%", "age": "unknown", "gender": "Women 82% (IG), 69% (YT)", "tier": 3, "basis": "India 22% top, Brazil 17%, US about 5%"}, {"n": "Minushi", "h": "minushi_g", "src": "IG", "geo": "unknown", "age": "unknown", "gender": "unknown", "tier": 0, "basis": "Not transcribed"}, {"n": "Zedoist", "h": "zedoist", "src": "YouTube Shorts", "geo": "US 32.9%, India 11.1%, UK 7.0%, Canada 4.3%, Philippines 4.0%", "age": "13–17 29.3%, 18–24 15.2%, 25–34 24.3%, 35–44 17.3%", "gender": "Men 77.8%", "tier": 1, "basis": "US, UK, Canada 44.2% of top five"}, {"n": "Musician Manan", "h": "mrmananprajapati", "src": "IG", "geo": "India 71.5%, Brazil 4.3%, Bangladesh 2.9%, US 2.3%, Indonesia 1.1%", "age": "18–24 41%, 13–17 23%", "gender": "Men 69.5%", "tier": 3, "basis": "India 71.5%"}, {"n": "Mustafa", "h": "ivory.feels_", "src": "IG", "geo": "Türkiye 43.1%, Azerbaijan 9.9%, Iran 8.1%, Iraq 4.5%, Syria 3.8%", "age": "25–34 42.8%, 18–24 29.9%", "gender": "Women 50.6%", "tier": 2, "basis": "Türkiye 43.1%, Middle East"}, {"n": "Anjan Bhattacharjee", "h": "anjanmusiclab", "src": "YouTube", "geo": "India 91.9%, Bangladesh 1.8%, Nepal 1.0%", "age": "25–34 31.4%, 35–44 24.2%, 18–24 14.6%", "gender": "Men 80.4%", "tier": 3, "basis": "India 91.9%"}], "await": [{"n": "Pianthesia", "h": "pianthesia", "ch": "Email", "date": "2026-11-03"}, {"n": "Maks Rayvan", "h": "maks_rayvan_shorts", "ch": "Email", "date": "2026-10-28"}, {"n": "David Neyrolles", "h": "aupiano.fr", "ch": "IG DM", "date": "2026-10-28"}, {"n": "Scott Shi", "h": "scott.sct", "ch": "Email", "date": "2026-10-29"}], "replied": [{"n": "Theodore Nightingale", "h": "pianist_nightingale", "ch": "IG", "date": "Nov 1", "draft": 1}, {"n": "Mr Piano", "h": "_mrpiano_", "ch": "IG", "date": "Nov 1", "draft": 1}, {"n": "Olzhas", "h": "olzhas_piano", "ch": "IG", "date": "Nov 1", "draft": 1}, {"n": "윤자빈", "h": "", "ch": "IG", "date": "~Nov 1", "draft": 1}, {"n": "Lessy_TV", "h": "lessy_tv", "ch": "Email", "date": "Oct 31", "draft": 0}, {"n": "Fabrice Breuss", "h": "fabrice_breuss", "ch": "Unknown", "date": "—", "draft": 0}, {"n": "Antonio C O Junior", "h": "pianoquetoca", "ch": "IG", "date": "Oct 27", "draft": 0}, {"n": "Andrew Hsu", "h": "", "ch": "IG", "date": "Nov 2", "draft": 0}, {"n": "q", "h": "", "ch": "IG", "date": "Nov 3", "draft": 0}, {"n": "Mama_piano2026", "h": "mama_piano2026", "ch": "IG", "date": "~Oct 31", "draft": 0}, {"n": "스위니 sweeney", "h": "", "ch": "IG", "date": "~Oct 30", "draft": 0}, {"n": "Anabel O'Halloran", "h": "anabeloha", "ch": "IG", "date": "Oct 29", "draft": 0}, {"n": "Ismael", "h": "ismael.santosw", "ch": "IG", "date": "Oct 29", "draft": 0}], "funnel": [["Contacted", 39, "creators reached out to"], ["Replied", 31, "answered outreach"], ["Demographics in", 12, "sent audience insights"], ["Offer made", 14, "incl. 6 drafts"], ["Offer sent", 8, "reached the creator"], ["Accepted", 2, "1 contract signed"]]}</script>
+<script>
+(function(){const DL=JSON.parse(document.getElementById('deals-data').textContent);
+const e=x=>String(x==null?'':x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const HAS=h=>h&&typeof BY!=='undefined'&&BY[h];
+const nm=(n,h)=>HAS(h)?`<a href="#${e(h)}" data-cr="${e(h)}">${e(n)}</a> <span style="color:var(--dim)">@${e(h)}</span>`:(h?`${e(n)} <span style="color:var(--dim)">@${e(h)}</span>`:e(n));
+const tp=t=>t?`<span class="pill t${t}">Tier ${t}</span>`:'<span class="pill">Unrated</span>';
+const sp=o=>`<span class="pill ${o.st=='accepted'?'ok':o.st=='declined'?'bad':o.st=='draft'?'warn':'acc'}">${e(o.txt)}</span>`;
+const fv=v=>v>=1e6?(v/1e6)+'M':(v/1e3)+'K';
+const TERMS={old:'Half upfront, rest at views',new:'Proportional to views',contract:'Contract: split payment'};
+const daysSince=d=>Math.max(0,Math.round((Date.now()-new Date(d+'T12:00:00-08:00'))/864e5));
+document.getElementById('dAsof').textContent=DL.asof;
+const mx=DL.funnel[0][1];document.getElementById('fun').innerHTML=DL.funnel.map(([l,n,s])=>`<div class="fs1"><b>${n}</b><small>${e(l)}</small><em>${e(s)}</em><i style="width:${Math.max(4,n/mx*100)}%"></i></div>`).join('');
+function table(id,cols,rows,st){const T=document.getElementById(id);st=st||{k:null,d:1};
+ const draw=()=>{let r=rows();if(st.k!=null)r=[...r].sort((a,b)=>{const x=cols[st.k].s(a),y=cols[st.k].s(b);return (x>y?1:x<y?-1:0)*st.d});
+ T.innerHTML='<thead><tr>'+cols.map((c,i)=>`<th data-i="${i}">${c.t}${st.k===i?(st.d>0?' ↑':' ↓'):''}</th>`).join('')+'</tr></thead><tbody>'+(r.length?r.map(o=>'<tr>'+cols.map(c=>`<td>${c.v(o)}</td>`).join('')+'</tr>').join(''):`<tr><td colspan="${cols.length}" style="color:var(--mut)">Nothing matches.</td></tr>`)+'</tbody>'};
+ T.onclick=ev=>{const th=ev.target.closest('th');if(th){const i=+th.dataset.i;st.d=st.k===i?-st.d:1;st.k=i;draw();return}const a=ev.target.closest('a[data-cr]');if(a){ev.preventDefault();openCreator(a.dataset.cr,0)}};draw();return draw;}
+const g=id=>document.getElementById(id);
+const tr=t=>t||9;
+const dOff=table('tOff',[{t:'Creator',v:o=>nm(o.n,o.h),s:o=>o.n},{t:'Tier',v:o=>tp(o.tier),s:o=>tr(o.tier)},{t:'Channel',v:o=>e(o.ch),s:o=>o.ch},{t:'Min views',v:o=>fv(o.views),s:o=>o.views},{t:'Terms',v:o=>e(TERMS[o.terms]),s:o=>o.terms},{t:'Status',v:sp,s:o=>o.st},{t:'Sent',v:o=>o.date?e(o.date.slice(5)):'—',s:o=>o.date||'0'}],
+ ()=>DL.offers.filter(o=>{const f=g('dSt').value;if(f=='pending'&&!['sent','replied','draft'].includes(o.st))return false;if(f=='sent'&&!['sent','replied'].includes(o.st))return false;if(f=='draft'&&o.st!='draft')return false;if(f=='closed'&&!['accepted','declined'].includes(o.st))return false;
+  const t=g('dTier').value;if(t!==''&&String(o.tier)!==t)return false;const c=g('dCh').value;if(c&&o.ch!=c)return false;return true}));
+['dSt','dTier','dCh'].forEach(i=>g(i).onchange=dOff);
+const dDemo=table('tDemo',[{t:'Creator',v:o=>nm(o.n,o.h),s:o=>o.n},{t:'Tier',v:o=>tp(o.tier),s:o=>tr(o.tier)},{t:'Tier basis',v:o=>e(o.basis),s:o=>o.basis},{t:'Source',v:o=>e(o.src),s:o=>o.src},{t:'Top countries',v:o=>e(o.geo),s:o=>o.geo},{t:'Age',v:o=>e(o.age),s:o=>o.age},{t:'Gender',v:o=>e(o.gender),s:o=>o.gender}],
+ ()=>DL.demo.filter(o=>{const t=g('dTier2').value;return t===''||String(o.tier)===t}),{k:1,d:1});g('dTier2').onchange=dDemo;
+table('tAw',[{t:'Creator',v:o=>nm(o.n,o.h),s:o=>o.n},{t:'Channel',v:o=>e(o.ch),s:o=>o.ch},{t:'Asked',v:o=>e(o.date.slice(5)),s:o=>o.date},{t:'Days waiting',v:o=>daysSince(o.date),s:o=>-daysSince(o.date)}],()=>DL.await);
+table('tRp',[{t:'Creator',v:o=>nm(o.n,o.h),s:o=>o.n},{t:'Channel',v:o=>e(o.ch),s:o=>o.ch},{t:'Replied',v:o=>e(o.date),s:o=>o.date},{t:'Status',v:o=>`<span class="pill warn">${o.draft?'Ask drafted':'No ask drafted'}</span>`,s:o=>o.draft}],()=>DL.replied);
+function setView(v){document.body.classList.toggle('deals',v=='deals');document.querySelectorAll('.views button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
+ if(v=='deals'){if(location.hash!='#deals')history.replaceState(null,'','#deals')}else if(location.hash=='#deals')history.replaceState(null,'',location.pathname+location.search);}
+document.querySelectorAll('.views button').forEach(b=>b.onclick=()=>{setView(b.dataset.v);scrollTo(0,0)});
+if(location.hash=='#deals')setView('deals');
+})();
 </script>
 </body></html>
